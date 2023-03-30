@@ -1,0 +1,194 @@
+###########################
+#  Configuration
+###########################
+
+set-window-option -g mode-keys vi
+
+# increase scroll-back history
+set -g history-limit 50000
+
+# use vim key bindings
+setw -g mode-keys vi
+
+# decrease command delay (increases vim responsiveness)
+set -sg escape-time 1
+
+# increase repeat time for repeatable commands
+set -g repeat-time 1000
+
+# re-number windows when one is closed
+set -g renumber-windows on
+
+# Use vim keybindings in copy mode
+setw -g mode-keys vi
+
+# tmux scrolling
+set-option -g mouse on
+
+# allow passthrough colors from shell
+set -g allow-passthrough 1
+
+# escape delay
+set-option -s escape-time 0
+
+###########################
+#  Key Bindings
+###########################
+
+# tmux prefix
+unbind C-b
+set -g prefix C-s
+
+# resize panes
+bind -r H resize-pane -L 5
+bind -r J resize-pane -D 5
+bind -r K resize-pane -U 5
+bind -r L resize-pane -R 5
+
+bind -n S-Left resize-pane -L 2
+bind -n S-Right resize-pane -R 2
+bind -n S-Down resize-pane -D 1
+bind -n S-Up resize-pane -U 1
+
+bind -n C-Left resize-pane -L 10
+bind -n C-Right resize-pane -R 10
+bind -n C-Down resize-pane -D 5
+bind -n C-Up resize-pane -U 5
+
+# cht.sh
+bind-key -r i run-shell "tmux neww ~/dotfiles/bin/cht.sh"
+
+# choose tree
+bind-key C-j choose-tree
+
+# break out pane
+bind-key b break-pane -d
+
+# split panes
+bind-key - split-window -v  -c '#{pane_current_path}'
+bind-key '\' split-window -h  -c '#{pane_current_path}'
+
+# Seamless aviation using vim-tmux-navigator
+is_vim='echo "#{pane_current_command}" | grep -iqE "(^|\/)g?(view|n?vim?)(diff)?$"'
+bind -n C-h if-shell "$is_vim" "send-keys C-h" "select-pane -L"
+bind -n C-j if-shell "$is_vim" "send-keys C-j" "select-pane -D"
+bind -n C-k if-shell "$is_vim" "send-keys C-k" "select-pane -U"
+bind -n C-l if-shell "$is_vim" "send-keys C-l" "select-pane -R"
+bind -n C-'\' if-shell "$is_vim" "send-keys C-\\" "select-pane -l"
+
+# new window
+bind c new-window -c '#{pane_current_path}'
+
+# Restore clear screen keybind mapped over by tmux-navigator
+bind C-l send-keys C-l
+
+# force a reload of the config kile
+unbind r
+bind r source-file ~/.tmux.conf \; display "Reloaded!"
+
+# Enable screen-like C-a C-a moving to last window
+bind-key C-a last-window
+
+# Go to beginning of line
+bind a send-prefix
+
+# Prompted join-pane
+bind-key j command-prompt -p "join pane from: "  "join-pane -h -s '%%'"
+
+# Easily swap a pane (targeted by pane number) with the current pane
+bind-key s display-panes\; command-prompt -p "pane #: "  "swap-pane -t '%%'"
+
+# "break session" and "kill session" without exiting tmux
+bind-key C-b send-keys 'tat && exit' 'C-m'
+bind-key K run-shell 'tmux switch-client -n \; kill-session -t "$(tmux display-message -p "#S")" || tmux kill-session'
+
+# Sample quick-pane configurations
+bind-key h split-window -h "htop"
+bind-key t split-window -h -c ~/ "vim todo.md"
+bind-key w split-window -h -c ~/my-wiki "vim +CtrlP"
+
+# Use vim keybindings in copy mode
+setw -g mode-keys vi
+
+# switch panes using Alt-arrow without prefix
+bind -n M-Left select-pane -L
+bind -n M-Right select-pane -R
+bind -n M-Up select-pane -U
+bind -n M-Down select-pane -D
+
+# don't rename windows automatically
+set-option -g allow-rename off
+
+# ###########################
+# # Command prompt
+# ###########################
+#
+# # Use emacs / readline key-bindings in the tmux command prompt
+set-option -g status-keys "emacs"
+
+# ###########################
+# # Status Bar
+# ###########################
+# set refresh interval for status bar
+set -g status-interval 30
+
+# center the status bar
+set -g status-justify left
+
+# increase space on right status bar
+set -g status-right-length 100
+
+# ###########################
+# # Colors
+# ###########################
+
+set -g status-style "fg=#8d959d,bg=#1e1e1e"
+set -g mode-style "fg=#1d1d1d,bg=#fad17a"
+
+set -g message-style "fg=#1d1d1d,bg=#fad17a, bold"
+set -g message-command-style "fg=#1d1d1d,bg=#fad17a, bold"
+
+set -g pane-border-style "fg=#333333,bg=#1e1e1e"
+set -g pane-active-border-style "fg=#555555,bg=#1e1e1e"
+
+set -g window-style "fg=default,bg=#1e1e1e"
+set -g window-active-style "fg=default,bg=#1e1e1e"
+
+set -g status "on"
+set -g status-justify left
+
+set -g status-left-length "100"
+set -g status-right-length "100"
+
+set -g status-left-style NONE
+set -g status-right-style NONE
+
+set -g status-left ""
+set -g status-right "#[fg=colour244,bg=colour236] %a %b %d %I:%M %p"
+
+setw -g window-status-activity-style "underscore,fg=#a9b1d6,bg=#1d1d1d"
+setw -g window-status-separator ""
+setw -g window-status-style "NONE,fg=#8d959d,bg=#1e1e1e"
+setw -g window-status-format " #I #W #F "
+setw -g window-status-current-format " #I #W #F "
+setw -g window-status-current-style "NONE,fg=#1e1e1e,bg=green"
+
+
+# Undercurl
+set -g default-terminal "${TERM}"
+set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'  # undercurl support
+set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m'  # underscore colours - needs tmux-3.0
+
+# tmux-plugins/tmux-prefix-highlight support
+set -g @prefix_highlight_output_prefix "#[fg=#e0af68]#[bg=#1d1d1d]#[fg=#1d1d1d]#[bg=#e0af68]"
+set -g @prefix_highlight_output_suffix ""
+
+# ################################
+# # Plugins
+# ################################
+# # List of plugins
+# set -g @plugin 'tmux-plugins/tpm'
+# set -g @plugin 'tmux-plugins/tmux-sensible'
+#
+# # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+# run '~/.tmux/plugins/tpm/tpm'

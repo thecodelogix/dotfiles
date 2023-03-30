@@ -1,0 +1,96 @@
+# clear out downloads folder
+alias purged="rm -rf ~/Downloads"
+
+# python
+alias python="python3"
+
+# stripe
+alias stripe-webhooks="stripe listen --forward-to localhost:3000/stripe_webhooks"
+
+# sidekiq
+alias sidekiq-pro="bundle exec sidekiq -q default -q mailers -q donations -q isolated -q critical -q expensive -q leaderboards -q api"
+
+
+# irc
+alias chat="irssi -n codelogix -c irc.freenode.net"
+
+# tmux
+alias tmux="TERM=screen-256color-bce tmux"
+alias tmuxrw="tmux rename-window"
+
+# bundler exec
+alias be="bundle exec"
+
+# rails
+alias rs="rails server"
+alias rc="spring rails console"
+alias rgm="bundle exec rake db:migrate && git checkout staging -- db/schema.rb"
+alias remigrate="bundle exec rake db:migrate && bundle exec rake db:rollback && bundle exec rake db:migrate"
+alias sidekiq="bundle exec sidekiq"
+alias rstats="bundle exec rake stats"
+
+# redis
+alias redis="redis-cli"
+
+# production
+alias prdb="production-database"
+alias pdb="production pg:psql"
+alias prc="production console"
+alias pt="production tail"
+
+# staging
+alias sdb="staging pg:psql"
+alias src="staging console"
+alias st="staging tail"
+
+# test
+alias ddb="development pg:psql"
+alias trc="development console"
+alias dt="development tail"
+
+# github
+alias gitdiff="git diff origin/staging..HEAD && git diff --stat origin/staging"
+alias gpo= "git push origin"
+alias gprs="hub pull-request -b staging -a carlweis"
+alias gprm="hub pull-request -b master -a carlweis"
+alias gstats="git shortlog -sn"
+alias gco="git checkout"
+alias gcos="git checkout staging"
+alias gcom="git checkout master"
+alias gb="git branch"
+alias gbs="git branches"
+alias gs="git status"
+
+# general
+alias rm-dsstore="find . -name '.DS_Store' -type f -delete"
+
+# terminal history
+alias hist="history | awk '{a[$2]++}END{for(i in a){print a[i] " " i}}' | sort -rn | head"
+
+# linter
+alias lintfile="bundle exec standardrb --fix "
+
+# vim
+alias v="nvim"
+alias vim="nvim"
+alias vi="nvim"
+alias oldvim="\vim"
+alias vimdiff="nvim -d"
+
+# python
+alias serveit="python -m http.server"
+
+# postgresql
+alias resetpsql="rm -rf /usr/local/var/postgres/postmaster.pid"
+alias resetdev="pkill -f puma && rm -rf /usr/local/var/postgres/postmaster.pid"
+
+# heroku
+alias hkp="git push heroku master"
+
+# bash shortcuts
+alias cl="clear"
+alias la="ls -la"
+
+# csv helpers
+alias pretty_csv="perl -pe 's/((?<=,)|(?<=^)),/ ,/g;' "$@" | column -t -s, | exec less  -F -S -X -K"
+alias csv_columns="csvcut -n"

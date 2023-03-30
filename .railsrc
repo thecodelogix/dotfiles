@@ -1,0 +1,5 @@
+-a propshaft
+-j esbuild
+--database postgresql
+--skip-test
+--css tailwind

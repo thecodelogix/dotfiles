@@ -1,0 +1,15 @@
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+  SupportedStyles:
+    - single_quotes
+    - double_quotes
+Style/FrozenStringLiteralComment:
+  Enabled: false
+  SafeAutoCorrect: true
+Style/EmptyMethod:
+  Enabled: true
+  EnforcedStyle: expanded
+Style/Documentation:
+  Enabled: false
+Layout/LineLength:
+  Max: 80
