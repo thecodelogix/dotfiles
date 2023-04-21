@@ -55,9 +55,6 @@ bind -n C-Right resize-pane -R 10
 bind -n C-Down resize-pane -D 5
 bind -n C-Up resize-pane -U 5
 
-# cht.sh
-bind-key -r i run-shell "tmux neww ~/dotfiles/bin/cht.sh"
-
 # choose tree
 bind-key C-j choose-tree
 
@@ -130,6 +127,7 @@ set-option -g status-keys "emacs"
 # # Status Bar
 # ###########################
 # set refresh interval for status bar
+set -g status "on"
 set -g status-interval 30
 
 # center the status bar
@@ -137,51 +135,15 @@ set -g status-justify left
 
 # increase space on right status bar
 set -g status-right-length 100
-
-# ###########################
-# # Colors
-# ###########################
-
-set -g status-style "fg=#8d959d,bg=#1e1e1e"
-set -g mode-style "fg=#1d1d1d,bg=#fad17a"
-
-set -g message-style "fg=#1d1d1d,bg=#fad17a, bold"
-set -g message-command-style "fg=#1d1d1d,bg=#fad17a, bold"
-
-set -g pane-border-style "fg=#333333,bg=#1e1e1e"
-set -g pane-active-border-style "fg=#555555,bg=#1e1e1e"
-
-set -g window-style "fg=default,bg=#1e1e1e"
-set -g window-active-style "fg=default,bg=#1e1e1e"
-
-set -g status "on"
-set -g status-justify left
-
-set -g status-left-length "100"
-set -g status-right-length "100"
-
-set -g status-left-style NONE
-set -g status-right-style NONE
-
-set -g status-left ""
-set -g status-right "#[fg=colour244,bg=colour236] %a %b %d %I:%M %p"
-
-setw -g window-status-activity-style "underscore,fg=#a9b1d6,bg=#1d1d1d"
-setw -g window-status-separator ""
-setw -g window-status-style "NONE,fg=#8d959d,bg=#1e1e1e"
+set -g status-style "fg=#605958,bg=#141414"
+set -g pane-border-style "fg=#2d2d2d,bg=#1c1c1c"
+set -g pane-active-border-style "fg=#2d2d2d,bg=#1c1c1c"
+set -g window-style "fg=default,bg=#1c1c1c"
+set -g window-active-style "fg=default,bg=#1c1c1c"
+setw -g window-status-separator "-"
 setw -g window-status-format " #I #W #F "
 setw -g window-status-current-format " #I #W #F "
-setw -g window-status-current-style "NONE,fg=#1e1e1e,bg=green"
-
-
-# Undercurl
-set -g default-terminal "${TERM}"
-set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'  # undercurl support
-set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m'  # underscore colours - needs tmux-3.0
-
-# tmux-plugins/tmux-prefix-highlight support
-set -g @prefix_highlight_output_prefix "#[fg=#e0af68]#[bg=#1d1d1d]#[fg=#1d1d1d]#[bg=#e0af68]"
-set -g @prefix_highlight_output_suffix ""
+set -g window-status-current-style "fg=white,bg=#1c1c1c,bold,nounderscore,noitalics"
 
 # ################################
 # # Plugins
@@ -189,6 +151,7 @@ set -g @prefix_highlight_output_suffix ""
 # # List of plugins
 # set -g @plugin 'tmux-plugins/tpm'
 # set -g @plugin 'tmux-plugins/tmux-sensible'
+# set -g @plugin "arcticicestudio/nord-tmux"
 #
 # # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
 # run '~/.tmux/plugins/tpm/tpm'
